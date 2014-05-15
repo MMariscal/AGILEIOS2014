@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html> 
+  <head>
+    <title>Esri Leaflet Demo</title>
+   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+   <!-- -Services at: http://viewer.nationalmap.gov/example/services/serviceList.html -->
+   <!-- Details on esri-leaflet at https://github.com/Esri/esri-leaflet -->
+    <!--[if lte IE 8]><link rel="stylesheet" href="/the/path/to/leaflet.ie.css"><![endif]-->
+    <style>
+    html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  #map{
+   
+    height:100%;
+  }
+    </style>
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+    <script src="esri-leaflet.js"></script>
+    <script src="leaflet-0.7.2/esri-leaflet.js"></script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      var template = "<h3>{NAME}</h3>{ACRES} Acres<br><small>Property ID: {PROPERTYID}<small>"
+ 
+      var map = L.map('map', {
+      inertia: true,
+      inertiaDeceleration: 2000
+      }).setView([39.994483, -0.065838], 18);
+ 
+      //L.esri.basemapLayer("Gray").addTo(map);
+
+      L.esri.dynamicMapLayer("http://smartcampus.sg.uji.es:6080/arcgis/rest/services/AGILE/UJI_Agile/MapServer").addTo(map);
+ 
+ L.esri.dynamicMapLayer("http://smartcampus.sg.uji.es:6080/arcgis/rest/services/SmartCampus/viscaUJI/MapServer").addTo(map);
+ 
+L.esri.dynamicMapLayer("http://smartcampus.sg.uji.es:6080/arcgis/rest/services/AGILE/BuildingInteriorbyFloorAgile/MapServer").addTo(map);
+ 
+
+ 
+    </script>
+  </body>
+</html>

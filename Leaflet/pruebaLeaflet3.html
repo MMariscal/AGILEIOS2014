@@ -1,0 +1,85 @@
+<html>
+  <head>
+    <title>ArcGIS Basemap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Load Leaflet from their CDN -->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+
+    <!-- Load Esri Leaflet -->
+    <script src="leaflet-0.7.2/esri-leaflet.js"></script>
+
+    <!-- Make the map fill the entire page -->
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+      #map {
+        width: 100%;
+        height:100%;
+      }
+    </style>
+  </head>
+  <body>
+    <input type=button value=Leaflet onclick="location.href='http://leafletjs.com/';">
+    <div id="map"></div>
+    
+    <script>
+
+      //Crea una diálogo de alerta y muestra la fecha de hoy
+      //var fecha = new Date();
+       //window.alert("Fecha: "+ fecha.getDate() + "/" + (fecha.getMonth() +1) + "/" + fecha.getFullYear()) 
+
+      //Crea la variable mapa, asignandole la zona a visualizar y desactivando el control del zoom
+      var map = L.map('map').setView([39.993699, -0.073631], 18);
+
+      //Crea los controles del zoom y los situa a la izquierda
+      //new L.Control.Zoom({ position: 'topleft' }).addTo(map);
+
+      // Añade el Mapa Base al mapa creado anteriormente 'map'
+      L.esri.basemapLayer("Topographic").addTo(map);
+      L.esri.dynamicMapLayer("http://smartcampus.sg.uji.es:6080/arcgis/rest/services/AGILE/UJI_Agile/MapServer/").addTo(map);
+
+      //Crea un círculo en las coordenadas indicadas indicando tamaño,  color, y transparencia
+      var circle = L.circle([39.993699, -0.073631], 60, {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5
+      }).addTo(map);
+
+      circle.bindPopup("<b>Edificios:</b><br>Espaitec1<br>Espaitec2").openPopup();
+
+      //Crea un marcador en las coordenadas indicadas y lo añade al mapa
+      var marcador1 = L.marker([39.993699, -0.073631],{draggable: true}).addTo(map);
+      var marcador2 = L.marker([39.9935694,-0.0732396],{draggable: true}).addTo(map);
+
+
+      //Añade un Popup en el marcador con el texto indicado
+      marcador1.bindPopup("<b>Edificio:</b><br>ESPAITEC2");
+      marcador2.bindPopup("<b>Edificio:</b><br>ESPAITEC1");
+
+      //Crea un poligono uniendo los puntos de las coordenadas indicadas
+      var poligonoE2 = L.polygon([
+        [39.994076, -0.074228],
+        [39.993838, -0.074400],
+        [39.993501, -0.073616],
+        [39.993742, -0.073437]
+      ]).addTo(map);
+
+      var poligonoE1 = L.polygon([
+        [39.993742, -0.073261],
+        [39.993509, -0.073433],
+        [39.993378, -0.073113],
+        [39.993613, -0.072947]
+      ]).addTo(map);
+
+      var edificios = L.layerGroup([marcador1, marcador2]);
+    
+
+    </script>
+
+  </body>
+</html>

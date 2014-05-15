@@ -1,0 +1,75 @@
+<html>
+  <head>
+    <title>ArcGIS Basemap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- CSS y JS de Leaflet -->
+    <link rel="stylesheet" href="leaflet-0.7.2/leaflet.css" />
+    <script src="leaflet-0.7.2/leaflet.js"></script>
+
+    <!--  Esri Leaflet -->
+    <script src="leaflet-0.7.2/esri-leaflet.js"></script>
+
+    <!-- Estilo de la página -->
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+      #map {
+        width: 100%;
+        height:100%;
+      }
+    </style>
+
+  </head>
+  <body>
+
+        <script type="text/javascript">
+          function ocultarCapa(){
+          map.removeLayer(capaDinamica);
+        }
+
+          function mostrarCapa(){
+          map.addLayer(capaDinamica);
+        }
+        </script>
+
+    <input type="button" value="Mostrar" onclick="mostrarCapa()">    
+    <input type="button" value="Ocultar" onclick="ocultarCapa()">
+    <input type="button" value="MostrarInfo" onclick="ocultarCapa()">
+    <div id="map"></div>
+
+    <script>
+
+      //Crea la variable mapa, asignandole la zona a visualizar
+      var map = L.map('map').setView([39.994483, -0.065838], 18);
+
+      //Añade el mapa base
+      //L.esri.basemapLayer("Topographic").addTo(map);
+
+      //Añade la capa dinámica
+      var capabase = L.esri.dynamicMapLayer("http://smartcampus.sg.uji.es:6080/arcgis/rest/services/SmartCampus/viscaUJI/MapServer");
+      var capaPlantas = L.esri.dynamicMapLayer("http://smartcampus.sg.uji.es:6080/arcgis/rest/services/AGILE/BuildingInteriorbyFloorAgile/MapServer");
+      var capaAgile = L.esri.dynamicMapLayer("http://smartcampus.sg.uji.es:6080/arcgis/rest/services/AGILE/UJI_Agile/MapServer");
+      map.addLayer(capabase);
+      map.addLayer(capaPlantas);
+      map.addLayer(capaAgile);
+      capaAgile.bringToFront();
+
+      /*L.esri.featureLayer("http://smartcampus.sg.uji.es:6080/arcgis/rest/services/AGILE/UJI_Agile/MapServer/", {
+          style: function (feature) {
+          return getStyle(feature);
+      },
+        onEachFeature: function(geojson, layer){
+          layer.bindPopup("<h3>"+geojson.properties.idEspacioInterior+"</h3><p>
+        " +(geojson.properties.idDescription ? geojson.properties.idDescription : "")+
+        " " +(geojson.properties.Description ? geojson.properties.Description : "")+
+        " " +(geojson.properties.STRING_ID ? geojson.properties.STRING_ID : "")+" "); } }).addTo(map);*/
+
+    </script>
+
+   </body>
+   
+  </html>  
