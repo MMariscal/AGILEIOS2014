@@ -10,6 +10,13 @@
     <!--  Esri Leaflet -->
     <script src="leaflet-0.7.2/esri-leaflet.js"></script>
 
+    <!-- JQuery -->
+    <script src="jquery-2.1.1.min.js" type="text/javascript"></script>
+
+    <!-- ArcGIS -->
+    <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css">
+    <script src="http://js.arcgis.com/3.9/"></script>
+
     <!-- Estilo de la página -->
     <style>
       html, body {
@@ -40,7 +47,7 @@
     <input type="button" value="Ocultar" onclick="ocultarCapa()">
     <input type="button" value="MostrarInfo" onclick="ocultarCapa()">
     <div id="map"></div>
-
+    
     <script>
 
       //Crea la variable mapa, asignandole la zona a visualizar
@@ -50,13 +57,29 @@
       //L.esri.basemapLayer("Topographic").addTo(map);
 
       //Añade la capa dinámica
+
       var capabase = L.esri.dynamicMapLayer("http://smartcampus.sg.uji.es:6080/arcgis/rest/services/SmartCampus/viscaUJI/MapServer");
       var capaPlantas = L.esri.dynamicMapLayer("http://smartcampus.sg.uji.es:6080/arcgis/rest/services/AGILE/BuildingInteriorbyFloorAgile/MapServer");
       var capaAgile = L.esri.dynamicMapLayer("http://smartcampus.sg.uji.es:6080/arcgis/rest/services/AGILE/UJI_Agile/MapServer");
+      
+      /*$("#map").addLayer(capabase, function(){
+        $("#map").addLayer(capaPlantas, function(){
+          $("#map").capabase.bringToback(function(){
+            $("#map").capaPlantas.bringToFront();
+          });
+          
+        })
+      });*/
+
       map.addLayer(capabase);
-      map.addLayer(capaPlantas);
-      map.addLayer(capaAgile);
-      capaAgile.bringToFront();
+      map.addLayer(capaPlantas,true);
+      
+      //capabase.bringToback();
+      //capaPlantas.bringToFront();
+      map.addControl(new L.Control.Layers({}, {"Capa Base":capabase,"Plantas":capaPlantas}, {autoZIndex: false}));
+      //map.addLayer(capaAgile);
+      //capaPlantas.bringToback();
+      //capaAgile.bringToFront();
 
       /*L.esri.featureLayer("http://smartcampus.sg.uji.es:6080/arcgis/rest/services/AGILE/UJI_Agile/MapServer/", {
           style: function (feature) {
