@@ -1,0 +1,21 @@
+/* CSS creados para las nuevas clases usadas */
+
+.center .navbar-inner {
+    text-align:center;
+}
+
+.navbar-inverse-top{
+	background-color: lightgrey;
+}
+
+.menu-top{
+	color: grey;
+}
+
+.dropdown-toggle-top{
+	color: grey;
+}
+
+.navbar-inverse-bottom{
+	backgroun-color: transparent;
+}
