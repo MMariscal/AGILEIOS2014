@@ -50,34 +50,52 @@
     
     <script>
 
+      function despues (){
+        //alert("Estoy ejecutando la funcion");
+        //var capabase = L.esri.dynamicMapLayer("http://smartcampus.sg.uji.es:6080/arcgis/rest/services/SmartCampus/viscaUJI/MapServer");
+        var capaPlantas = L.esri.dynamicMapLayer("http://smartcampus.sg.uji.es:6080/arcgis/rest/services/AGILE/BuildingInteriorbyFloorAgile/MapServer");
+        
+        map.addLayer(capaPlantas);
+        //capabase.bringToback();
+        //capaPlantas.bringToFront();
+        window.setTimeout(masdespues,1000);
+        
+        //capaAgile.bringToFront();
+        
+      }
+
+      function masdespues(){
+        var capaAgile = L.esri.dynamicMapLayer("http://smartcampus.sg.uji.es:6080/arcgis/rest/services/AGILE/UJI_Agile/MapServer");
+        map.addLayer(capaAgile);
+        capaAgile.bringToFront();
+      }
+
       //Crea la variable mapa, asignandole la zona a visualizar
       var map = L.map('map').setView([39.994483, -0.065838], 18);
 
       //Añade el mapa base
       //L.esri.basemapLayer("Topographic").addTo(map);
 
-      //Añade la capa dinámica
+      //Añade el control de capas
+      
 
       var capabase = L.esri.dynamicMapLayer("http://smartcampus.sg.uji.es:6080/arcgis/rest/services/SmartCampus/viscaUJI/MapServer");
       var capaPlantas = L.esri.dynamicMapLayer("http://smartcampus.sg.uji.es:6080/arcgis/rest/services/AGILE/BuildingInteriorbyFloorAgile/MapServer");
       var capaAgile = L.esri.dynamicMapLayer("http://smartcampus.sg.uji.es:6080/arcgis/rest/services/AGILE/UJI_Agile/MapServer");
       
-      /*$("#map").addLayer(capabase, function(){
-        $("#map").addLayer(capaPlantas, function(){
-          $("#map").capabase.bringToback(function(){
-            $("#map").capaPlantas.bringToFront();
-          });
-          
-        })
-      });*/
-
       map.addLayer(capabase);
-      map.addLayer(capaPlantas,true);
+      map.addControl(new L.Control.Layers({}, {"Capa Base":capabase,"Plantas":capaPlantas,"AGILE":capaAgile}, {autoZIndex: false}));
+      window.setTimeout(despues,1000);
+      map.on('zoomend', function() {
+        map.addLayer(capabase);
+        window.setTimeout(despues,2000); // e is an event object (MouseEvent in this case)
+      });
+      //map.addLayer(capaPlantas,true);
       
       //capabase.bringToback();
       //capaPlantas.bringToFront();
-      map.addControl(new L.Control.Layers({}, {"Capa Base":capabase,"Plantas":capaPlantas}, {autoZIndex: false}));
-      //map.addLayer(capaAgile);
+      
+      
       //capaPlantas.bringToback();
       //capaAgile.bringToFront();
 
