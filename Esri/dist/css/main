@@ -1,0 +1,7 @@
+.center .navbar-inner {
+    text-align:center;
+}
+
+.navbar-inverse-top{
+	
+}
